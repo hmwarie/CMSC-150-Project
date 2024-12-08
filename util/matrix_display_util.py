@@ -1,28 +1,38 @@
 import numpy as np
-
 from tkinter import *
 import ttkbootstrap as ttk
 
 class MatrixDisplay(ttk.Frame):
     def __init__(self, root, matrix, selected_foods, is_last_iteration):
+        """
+        Initializes the MatrixDisplay frame with the given parameters.
+        """
         super().__init__(root)
         self.selected_foods = selected_foods
         self.matrix = matrix
         self.final_solution = is_last_iteration
-
         self.initialize_frame()
 
     def initialize_frame(self):
+        """
+        Initializes the frame by generating column names and adding necessary subframes.
+        """
         self.generate_column_names()
         self.generate_simplex_iteration_frame()
         self.generate_simplex_basic_solution_frame()
 
     def generate_column_names(self):
+        """
+        Generates the column names for the simplex matrix, including slack variables, food variables, and other necessary columns.
+        """
         self.columns_names = [f"S{i+1}" for i in range(self.matrix.shape[1] - len(self.selected_foods) - 2)]
         self.columns_names.extend([f"x{i+1}" for i in range(len(self.selected_foods))])
         self.columns_names.extend(["z", "RHS"])
 
     def generate_simplex_iteration_frame(self):
+        """
+        Generates and displays the frame for the simplex iteration matrix, including scrollbars for navigation.
+        """
         simplex_iteration_frame = ttk.Frame(self)
         simplex_iteration_frame.pack(padx=130, pady=10)
 
@@ -48,6 +58,9 @@ class MatrixDisplay(ttk.Frame):
         simplex_iteration_treeview.pack()
 
     def generate_simplex_basic_solution_frame(self):
+        """
+        Generates and displays the frame for the basic solution in the simplex method, showing either the final or current solution.
+        """
         simplex_basic_solution_frame = ttk.Frame(self)
         simplex_basic_solution_frame.pack(padx=130, pady=20)
 
@@ -70,6 +83,9 @@ class MatrixDisplay(ttk.Frame):
         simplex_iteration_treeview.pack()        
 
     def find_identity(self, array):
+        """
+        Finds the index of the identity (value '1') in the given array, if it exists.
+        """
         if 1 in array:
             instance_of_1 = np.where(array == 1)[0]
             if instance_of_1.size == 1:
@@ -78,6 +94,9 @@ class MatrixDisplay(ttk.Frame):
         return None
     
     def is_identity(self, array, index):
+        """
+        Checks if the given index in the array corresponds to an identity column (only 1 at that index, 0 elsewhere).
+        """
         for i in range(len(array)):
             if i == index:
                 continue
@@ -86,6 +105,9 @@ class MatrixDisplay(ttk.Frame):
         return True
 
     def get_solution(self, matrix):
+        """
+        Extracts the solution vector from the simplex matrix by identifying basic variables.
+        """
         num_variables = matrix.shape[1] - 1
         solution = np.empty(num_variables)
         for i in range(num_variables):

@@ -2,12 +2,18 @@ import numpy as np
 from .augmented_matrix_util import generate_augmented_matrix
 
 def has_negative(array):
+    """
+    Checks if the array contains any negative values.
+    """
     for coefficient in array:
         if coefficient < 0:
             return True
     return False
 
 def find_pivot_column(array):
+    """
+    Finds the index of the pivot column, which is the most negative value in the array.
+    """
     negative_indices = np.where(array < 0)[0]
     if negative_indices.size > 0:
         pivot_col = negative_indices[np.argmax(np.abs(array[negative_indices]))]
@@ -15,6 +21,9 @@ def find_pivot_column(array):
     return None
 
 def get_test_ratio(array, solution_column):
+    """
+    Computes the test ratios (solution column divided by array values) for each row.
+    """
     test_ratio = np.empty(len(array))
     for i in range(len(array)):
         if array[i] == 0:
@@ -24,6 +33,9 @@ def get_test_ratio(array, solution_column):
     return test_ratio
 
 def find_pivot_row_index(array, solution_column):
+    """
+    Finds the index of the pivot row by identifying the minimum positive test ratio.
+    """
     test_ratio = get_test_ratio(array, solution_column)
 
     try:
@@ -35,6 +47,10 @@ def find_pivot_row_index(array, solution_column):
     return min_positive_index[0]
 
 def simplex_method(constraints):
+    """
+    Performs the simplex method to solve a linear programming problem, starting with the given constraints.
+    Returns the final matrix and a list of matrices from each iteration.
+    """
     matrix = generate_augmented_matrix(constraints)
     matrix = matrix.transpose()
 
@@ -85,4 +101,3 @@ def simplex_method(constraints):
         iteration_count += 1
 
     return (matrix, simplex_iteration)
-
