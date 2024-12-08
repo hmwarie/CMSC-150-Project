@@ -6,23 +6,10 @@ An app that has a diet solver as its main features and generic solver as its add
 
 The objective of this feature is to identify the most cost-effective and nutritious combination of foods that will fulfill all daily nutritional requirements. The combination of foods will be based upon the food options selected by the user. This problem is formulated as a linear program with the objectivem of minimizing cost under specified constraints and ensuring nutritional adequacy. These constraints control factors such as number of calories and amounts of vitamins, minerals, fats, sodium and cholesterol in the diet. Additionally, each food option is restricted to a range of 0-10 servings. The program employs simplex method set up as a dual problem to solve for the optimal combination of foods.
 
-## Intalling External Modules
+## Installing Dependencies
 
-Make sure you have Python and pip installed on your system before running these commands. 
 ```bash
-pip install tk
-pip install ttkbootstrap
-```
- If you're using a virtual environment, activate it before running the commands.
- ```bash
-# Create a virtual environment
-python -m venv myenv
-
-# Activate the virtual environment (Windows)
-myenv\Scripts\activate
-
-# Activate the virtual environment (Unix or MacOS)
-source myenv/bin/activate
+pip install -r requirements.txt
 ```
 ## Running the Program
 Use the cd command to navigate to the directory:
